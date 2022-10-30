@@ -1,0 +1,38 @@
+<main>
+    <section id="createDriver">
+        <h2>New Driver</h2>
+        <section id="message">
+            <h3>Título</h3>
+            <p>Detalhes</p>
+        </section>
+        <form id="createDriverForm">
+            <div>
+                <label for="name">Name</label>
+                <input id="name" type="text">
+            </div>
+            <div>
+                <label for="birthDate">Birthdate</label>        
+                <input id="birthdate" type="text">
+            </div>
+            <div>
+                <label for="fatestLap">Fastest lap</label>
+                <input id="fatestLap" type="text">
+            </div>
+            <input type="submit" value="Create">
+        </form>
+    </section>
+    <section id="driversList">
+        <h2>Drivers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>Birthdate</th>
+                    <th>Fastest Lap</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyElement">
+            </tbody>
+        </table>
+    </section>
+</main>

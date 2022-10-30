@@ -1,0 +1,63 @@
+
+main {
+    font-size: 1.2rem;
+    margin-left: 1.2rem;
+}
+
+label {
+   display: inline-block;
+   width: 5%; 
+   text-align: right;
+   padding-right: 0.5rem;
+}
+
+form div {
+  padding: 0.25rem;  
+}
+
+input[type="text"] {
+    width: 20rem;
+    height: 1.5rem;
+}
+
+input[type="submit"] {
+    margin-left: 6%;
+    margin-top: 0.7rem;
+    width: 10rem;
+    height: 1.7rem;
+}
+
+table {
+    width: 70%;
+    border: 1px solid;
+}
+
+th, td {
+    border-right: 1px solid;
+}
+
+th:last-child, td:last-child {
+    border-right: 0px;
+}
+
+tr > td {
+    border-top: 1px solid;
+}
+
+#message {
+   border-radius: 2%;
+   border: 1px solid;
+   width: 25%; 
+   margin-bottom: 2rem;
+   padding: 1.2rem;
+   display: none;
+}
+
+#message.visible {
+    display: block;
+}
+
+#message h3 {
+    width: 100%;
+    text-align: center;
+}
