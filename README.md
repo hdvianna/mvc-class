@@ -8,3 +8,9 @@ This is a didactic project for Web Development classes.
 npm install
 npm run start
 ```
+
+## Testing
+
+```
+npm run test
+```
