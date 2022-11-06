@@ -1,3 +1,5 @@
+import dateModule from '../../../domain/types/date';
+
 export default (function(form) {
     
     const document = form.ownerDocument;
@@ -12,7 +14,7 @@ export default (function(form) {
             return domFields.name.value;
         },
         getBirthdate() {
-            return domFields.birthdate.value;
+            return dateModule(domFields.birthdate.value);
         },
         getFatestLap() {
             return domFields.fastestLap.value;

@@ -4,8 +4,11 @@ export default (function () {
         "birthdate": "Birthdate",
         "fastestLap": "Fastest lap"
     }
+    const VIOLATIONS_MAP = {
+        "MINIMUM_AGE": "Age should be equals or greater than 18 years"
+    }
     return {
-        makeDefaultViewModel(model) {
+        makeDefault(model) {
             const viewModel = {
                 drivers:  model.list(),
             };
@@ -14,7 +17,7 @@ export default (function () {
             viewModel.fastestLap = "";
             return viewModel;
         },
-        makeViewModelFromResult(result, model) {
+        makeFromResult(result, model) {
             const viewModel = {
                 drivers:  model.list(),
                 success: result.success 
@@ -28,15 +31,21 @@ export default (function () {
                 );
                 let invalidMessage = makeMessageIfNotEmpty(
                     "Invalid fields: ", 
-                    result.required
+                    result.invalid
                         .map(field => FIELD_MAP[field])
+                        .join(", ")
+                );
+                let violationMessage = makeMessageIfNotEmpty(
+                    "Violations: ", 
+                    result.violations
+                        .map(violation => VIOLATIONS_MAP[violation])
                         .join(", ")
                 );
 
                 viewModel.message = {
                     title: "Error while creating driver!",
                     messages: [
-                        requiredMessage, invalidMessage
+                        requiredMessage, invalidMessage, violationMessage
                     ]
                 }
             }

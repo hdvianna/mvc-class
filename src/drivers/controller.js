@@ -1,13 +1,13 @@
 export default (function(model, presenter) {
     return {
-        create(view, adapter) {
-            const result = model.create(adapter);
-            const viewModel = presenter.makeViewModelFromResult(result, model);
-            view.updateViewModel(viewModel);
+        create(output, input) {
+            const result = model.create(input);
+            const presentation = presenter.makeFromResult(result, model);
+            output.send(presentation);
         },
-        init(view) {
-            const viewModel = presenter.makeDefaultViewModel(model);
-            view.updateViewModel(viewModel);
+        main(output) {
+            const presentation = presenter.makeDefault(model);
+            output.send(presentation);
         }
     }
 });

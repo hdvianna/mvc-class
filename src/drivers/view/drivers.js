@@ -1,6 +1,6 @@
 import html from './drivers.html';
 import css from './drivers.css'
-import adapterModule from '../adapter';
+import adapterModule from './adapters/domAdapter';
 
 const parser = new DOMParser();
 
@@ -19,7 +19,7 @@ export default (function (controller) {
         getDomElement() {
             return domElement;
         },
-        updateViewModel(viewModel) {
+        send(viewModel) {
             messageElement.classList.remove("visible");
             if (viewModel.message) {
                 messageElement.classList.add("visible");
@@ -33,10 +33,11 @@ export default (function (controller) {
                     console.log(domFields[key]);
                     domFields[key].value = "";
                 }
-                tbodyElement.innerHTML = viewModel.drivers.map(driver => {
-                    return `<tr><td>${driver.name}</td><td>${driver.birthdate}</td><td>${driver.fastestLap}</td></tr>`
-                }).join("");
             }
+
+            tbodyElement.innerHTML = viewModel.drivers.map(driver => {
+                return `<tr><td>${driver.name}</td><td>${driver.birthdate.value}</td><td>${driver.fastestLap}</td></tr>`
+            }).join("");
 
         }
     }    
@@ -54,7 +55,6 @@ export default (function (controller) {
             controller.create(view, adapter);            
         });
     }
-
 
     return view;
 
