@@ -1,0 +1,29 @@
+@startuml
+
+
+    hide empty members
+
+    interface DataMapper <E> {
+        + insert(entity : E)  
+        + update(entity : E)  
+        + delete(entity : E)  
+        + findAll() : List<E>         
+    }
+
+    class DriverMapper implements DataMapper
+
+    entity Driver {
+        + uuid : UUID
+        + name : String
+        + date : Date
+        + fastestLap : Time
+    }
+
+    package DriversDB <<Database>> {
+
+    }
+
+    DriverMapper ..> Driver
+    DriverMapper ..> DriversDB
+
+@enduml

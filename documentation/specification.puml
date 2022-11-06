@@ -1,0 +1,21 @@
+@startuml
+    
+    hide empty members
+
+    interface Specification <E> {
+        + isSatisfiedBy(entity : E)
+    }
+
+    class MinimumAgeSpecification implements Specification {
+        - baseDate : Date
+        - minimumAge : int
+        + isSatisfiedBy(entity : Driver)
+    }
+
+    class MaximumAgeSpecification implements Specification {
+        - baseDate : Date
+        - maximumAge : int
+        + isSatisfiedBy(entity : Driver)
+    }
+
+@enduml

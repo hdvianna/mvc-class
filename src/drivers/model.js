@@ -1,38 +1,50 @@
 import resultBuilderModule from "./resultBuilder";
+import Driver from "../domain/entities/Driver";
+import MinimuAgeSpecification from "../domain/specifications/MinimuAgeSpecification";
 
-export default (function() {
-    const drivers = [];
+export default (function(dataMapper) {
     return {
         create(adapter) {
-            const resultBuilder = resultBuilderModule();
-            let success = true;
+            const inputResultBuilder = resultBuilderModule();
                     
             if (isEmpty(adapter.getName())) {
-                resultBuilder.addRequired('name');
-                success = false;
+                inputResultBuilder.addRequired('name');
             }
 
-            if (isEmpty(adapter.getBirthdate())) {
-                resultBuilder.addRequired('birthdate');
-                success = false;
+            if (adapter.getBirthdate().isEmpty) {
+                inputResultBuilder.addRequired('birthdate');
+            } else if (!adapter.getBirthdate().isValid) {
+                inputResultBuilder.addInvalid('birthdate');
             }
 
             if (isEmpty(adapter.getFatestLap())) {
-                resultBuilder.addRequired('fastestLap');
-                success = false;
+                inputResultBuilder.addRequired('fastestLap');
             }
 
+            if (!inputResultBuilder.success()) {
+                return inputResultBuilder.build();
+            }
+
+            const ruleResultBuilder = resultBuilderModule();
+
+            const minimuAgeSpecification = new MinimuAgeSpecification(new Date(), 18);
+            let driver = new Driver(adapter.getName(), adapter.getBirthdate(), adapter.getFatestLap());
+
+            if (!minimuAgeSpecification.isSpecifiedBy(driver)) {
+                ruleResultBuilder.addViolation("MINIMUM_AGE");
+            }
             
-            if (success) {
-                createDriver(adapter);
-            }
+            if (!ruleResultBuilder.success()) {
+                return ruleResultBuilder.build();
+            }                
 
-            return resultBuilder.build(success);
+            create(driver);
+            return ruleResultBuilder.build();
 
 
         },
         list() {
-            return drivers;
+            return dataMapper.findAll();
         }
     }
 
@@ -40,11 +52,7 @@ export default (function() {
         return !value || value.trim().length === 0;
     }
 
-    function createDriver(adapter) {
-        drivers.push({
-            "name": adapter.getName(),
-            "birthdate": adapter.getBirthdate(),
-            "fastestLap": adapter.getFatestLap()
-        })
+    function create(driver) {
+        dataMapper.insert(driver);
     }
 });
