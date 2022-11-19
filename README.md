@@ -2,11 +2,22 @@
 
 This is a didactic project for Web Development classes.
 
-## Running
+## Installing
 
 ```
 npm install
+```
+
+## Running the frontend
+
+```
 npm run start
+```
+
+## Running the backend
+
+```
+npm run server
 ```
 
 ## Testing
