@@ -1,6 +1,6 @@
 import html from './drivers.html';
 import css from './drivers.css'
-import adapterModule from './adapters/domAdapter';
+import adapterModule from '../adapters/domAdapter';
 
 const parser = new DOMParser();
 
