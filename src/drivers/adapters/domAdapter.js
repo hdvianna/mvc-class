@@ -1,4 +1,4 @@
-import dateModule from '../../../domain/types/date';
+import dateModule from '../../domain/types/date';
 
 export default (function(form) {
     
