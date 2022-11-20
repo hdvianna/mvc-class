@@ -15,15 +15,18 @@ const port = 8000;
 app.use(express.json());
 
 app.get('/drivers', (request, response) => {
+    injectCorsHeaders(response);
     driversController.main(response);
 });
 
 app.post('/drivers', (request, response) => {
+    injectCorsHeaders(response);
     let input = jsonAdpaterModule(request.body);
     driversController.create(response, input);
 });
 
 app.options("/drivers", function(request, response){
+    injectCorsHeaders(response); 
     response.send(200);
 });
 
@@ -32,3 +35,9 @@ app.listen(
         console.log(`Drivers server started on port ${port}`);
     }
 );
+
+function injectCorsHeaders(response) {
+    response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+    response.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    response.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length');
+}

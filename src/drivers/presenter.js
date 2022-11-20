@@ -8,48 +8,50 @@ export default (function () {
         "MINIMUM_AGE": "Age should be equals or greater than 18 years"
     }
     return {
-        makeDefault(model) {
+        async makeDefault(model) {
             const viewModel = {
-                drivers:  model.list(),
+                drivers: await model.list(),
             };
             viewModel.name = "";
             viewModel.birthdate = "";
             viewModel.fastestLap = "";
             return viewModel;
         },
-        makeFromResult(result, model) {
-            const viewModel = {
-                drivers:  model.list(),
-                success: result.success 
-            };
-            if (!result.success) {
-                let requiredMessage = makeMessageIfNotEmpty(
-                    "Mandatory fields: ",
-                    result.required
-                        .map(field => FIELD_MAP[field])
-                        .join(", ")
-                );
-                let invalidMessage = makeMessageIfNotEmpty(
-                    "Invalid fields: ", 
-                    result.invalid
-                        .map(field => FIELD_MAP[field])
-                        .join(", ")
-                );
-                let violationMessage = makeMessageIfNotEmpty(
-                    "Violations: ", 
-                    result.violations
-                        .map(violation => VIOLATIONS_MAP[violation])
-                        .join(", ")
-                );
-
-                viewModel.message = {
-                    title: "Error while creating driver!",
-                    messages: [
-                        requiredMessage, invalidMessage, violationMessage
-                    ]
+        async makeFromResult(result, model) {
+            return model.list().then(list => {
+                const viewModel = {
+                    drivers: list,
+                    success: result.success 
+                };
+                if (!result.success) {
+                    let requiredMessage = makeMessageIfNotEmpty(
+                        "Mandatory fields: ",
+                        result.required
+                            .map(field => FIELD_MAP[field])
+                            .join(", ")
+                    );
+                    let invalidMessage = makeMessageIfNotEmpty(
+                        "Invalid fields: ", 
+                        result.invalid
+                            .map(field => FIELD_MAP[field])
+                            .join(", ")
+                    );
+                    let violationMessage = makeMessageIfNotEmpty(
+                        "Violations: ", 
+                        result.violations
+                            .map(violation => VIOLATIONS_MAP[violation])
+                            .join(", ")
+                    );
+    
+                    viewModel.message = {
+                        title: "Error while creating driver!",
+                        messages: [
+                            requiredMessage, invalidMessage, violationMessage
+                        ]
+                    }
                 }
-            }
-            return viewModel;
+                return viewModel;
+            });
         }
     }
 
