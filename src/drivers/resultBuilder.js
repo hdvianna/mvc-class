@@ -21,7 +21,7 @@ export default (function () {
         success() {
             return result.required.length === 0 && result.invalid.length === 0 && result.violations.length === 0
         },
-        build() {
+        async build() {
             result.success = this.success();
             return result;
         }

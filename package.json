@@ -7,7 +7,8 @@
     "test": "jest",
     "build": "webpack",
     "start": "webpack serve --open",
-    "server": "nodemon --exec babel-node ./src/server.js"
+    "server": "nodemon --exec babel-node ./src/server.js",
+    "server-cors": "nodemon --exec babel-node ./src/server-cors.js"
   },
   "author": "",
   "license": "ISC",

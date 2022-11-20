@@ -1,12 +1,12 @@
 export default (function(model, presenter) {
     return {
-        create(output, input) {
-            const result = model.create(input);
-            const presentation = presenter.makeFromResult(result, model);
+        async create(output, input) {
+            const result = await model.create(input);
+            const presentation = await presenter.makeFromResult(result, model);
             output.send(presentation);
         },
-        main(output) {
-            const presentation = presenter.makeDefault(model);
+        async main(output) {
+            const presentation = await presenter.makeDefault(model);
             output.send(presentation);
         }
     }

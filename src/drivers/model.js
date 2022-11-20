@@ -4,7 +4,7 @@ import MinimuAgeSpecification from "../domain/specifications/MinimuAgeSpecificat
 
 export default (function(dataMapper) {
     return {
-        create(adapter) {
+        async create(adapter) {
             const inputResultBuilder = resultBuilderModule();
                     
             if (isEmpty(adapter.getName())) {
@@ -22,7 +22,7 @@ export default (function(dataMapper) {
             }
 
             if (!inputResultBuilder.success()) {
-                return inputResultBuilder.build();
+                return await inputResultBuilder.build();
             }
 
             const ruleResultBuilder = resultBuilderModule();
@@ -35,16 +35,16 @@ export default (function(dataMapper) {
             }
             
             if (!ruleResultBuilder.success()) {
-                return ruleResultBuilder.build();
+                return await ruleResultBuilder.build();
             }                
 
-            create(driver);
-            return ruleResultBuilder.build();
-
+            await dataMapper.insert(driver);
+            return await ruleResultBuilder.build();
 
         },
-        list() {
-            return dataMapper.findAll();
+        async list() {          
+            let list = await dataMapper.findAll();
+            return list;
         }
     }
 
@@ -52,7 +52,4 @@ export default (function(dataMapper) {
         return !value || value.trim().length === 0;
     }
 
-    function create(driver) {
-        dataMapper.insert(driver);
-    }
 });

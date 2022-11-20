@@ -28,9 +28,7 @@ export default (function (controller) {
             } 
 
             if (viewModel.success) {
-                console.log(viewModel);
                 for(let key in domFields) {
-                    console.log(domFields[key]);
                     domFields[key].value = "";
                 }
             }
